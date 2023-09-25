@@ -8,7 +8,6 @@
 
 
 class UInterpToMovementComponent;
-
 UCLASS()
 class TMS_PLATFORMER_API AMovingPlatform : public ABasePlatform
 {
@@ -18,6 +17,6 @@ public:
 	AMovingPlatform();
 
 protected:
-	UPROPERTY(BlueprintReadOnly, EditDefaultsOnly, Category="Movement")
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category="Movement")
 	UInterpToMovementComponent* InterpToMovementComponent;
 };

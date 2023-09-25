@@ -8,6 +8,7 @@ ABasePlatform::ABasePlatform()
 	PrimaryActorTick.bCanEverTick = false;
 
 	StaticMesh = CreateDefaultSubobject<UStaticMeshComponent>("Static Mesh");
+	StaticMesh->SetGenerateOverlapEvents(true);
 	SetRootComponent(StaticMesh);
 }
 
