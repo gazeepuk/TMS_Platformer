@@ -24,10 +24,16 @@ virtual void BeginPlay() override;
 	UPROPERTY(EditInstanceOnly)
 	float lifeSpan = 5.0f;
 
+	UPROPERTY(EditInstanceOnly)
+	float respawnSpan = 5.0f;
+	
 private:
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent,
 	           FVector NormalImpulse, const FHitResult& Hit);
 	UFUNCTION()
 	void StartLifeSpan();
+
+	UFUNCTION()
+	void StartRespawnSpan();
 };

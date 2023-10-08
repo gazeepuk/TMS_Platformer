@@ -29,5 +29,13 @@ void AFallingPlatform::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherAct
 
 void AFallingPlatform::StartLifeSpan()
 {
-	Destroy();
+	SetActorHiddenInGame(true);
+	SetActorEnableCollision(false);
+	GetWorldTimerManager().SetTimer(TimerHandle, this, &AFallingPlatform::StartRespawnSpan,respawnSpan,false);
+}
+
+void AFallingPlatform::StartRespawnSpan()
+{
+	SetActorHiddenInGame(false);
+	SetActorEnableCollision(true);
 }
