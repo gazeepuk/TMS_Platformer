@@ -9,13 +9,17 @@ public class TMS_Platformer : ModuleRules
 	{
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
-		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore" });
+		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "AIModule" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
 		PublicIncludePaths.AddRange(new string[]
 			{
 				"TMS_Platformer/Platforms",
+				"TMS_Platformer/Components",
+				"TMS_Platformer/Character",
+				"TMS_Platformer/AI",
+				"TMS_Platformer/AI/Services"
 			}
 		);
 
