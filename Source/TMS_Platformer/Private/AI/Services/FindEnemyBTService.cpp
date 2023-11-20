@@ -20,7 +20,7 @@ void UFindEnemyBTService::TickNode(UBehaviorTreeComponent& OwnerComp, uint8* Nod
 	if (Blackboard)
 	{
 		const auto Controller = OwnerComp.GetAIOwner();
-		const auto PerceptionComponent = Controller->FindComponentByClass<UTMSAIPerceptionComponent>();
+		const auto PerceptionComponent = Controller->GetComponentByClass<UTMSAIPerceptionComponent>();
 		if(PerceptionComponent)
 		{
 			Blackboard->SetValueAsObject(EnemyActorKey.SelectedKeyName, PerceptionComponent->GetClosestEnemy());

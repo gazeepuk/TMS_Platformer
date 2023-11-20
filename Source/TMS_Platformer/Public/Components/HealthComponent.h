@@ -30,9 +30,11 @@ public:
 
 	UFUNCTION(BlueprintCallable)
 	void OnHealed();
-	
+
+	UFUNCTION(BlueprintCallable,BlueprintPure)
 	bool IsHealthFull() const {return FMath::IsNearlyEqual(CurrentHealth, MaxHealth);}
 
+	UFUNCTION(BlueprintCallable)
 	bool TryHeal(float HealAmount);
 protected:
 	virtual void BeginPlay() override;
@@ -47,7 +49,7 @@ protected:
 	float HealthDelay = 3.0f;
 	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite, Category= "Health", meta=(EditCondition="bAutoHeal"))
 	float HealthModifier = 1.0f;
-
+	
 	FTimerHandle HealTimerHandle;
 public:	
 	UFUNCTION()

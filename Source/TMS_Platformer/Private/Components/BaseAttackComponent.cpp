@@ -3,6 +3,7 @@
 
 #include "Components/BaseAttackComponent.h"
 
+#include "Character/BaseCharacter.h"
 #include "Components/HealthComponent.h"
 #include "Kismet/KismetSystemLibrary.h"
 
@@ -19,7 +20,12 @@ void UBaseAttackComponent::BeginPlay()
 
 void UBaseAttackComponent::Attack()
 {
-	const auto Owner = GetOwner();
+	if(!bCanAttack)
+	{
+		return;
+	}
+	const auto Owner = Cast<ABaseCharacter>(GetOwner());
+	Owner->PlayAnimMontage(AttackAnimMontage);
 	TArray<FHitResult> HitArray;
 	const bool bHitted = UKismetSystemLibrary::SphereTraceMulti(GetWorld(), Owner->GetActorLocation(),
 	                                       GetOwner()->GetActorLocation() + Owner->GetActorForwardVector() * 10.0f,
@@ -30,10 +36,24 @@ void UBaseAttackComponent::Attack()
 	{
 		for (auto Hit : HitArray)
 		{
-			if(const auto HealthComponent = Hit.GetActor()->GetComponentByClass<UHealthComponent>())
+			if(const auto HitHealthComponent = Hit.GetActor()->GetComponentByClass<UHealthComponent>())
 			{
-				HealthComponent->SetHealth(HealthComponent->GetHealth()-DamageValue);
-			}
+
+				HitHealthComponent->OnTakeAnyDamage(HitHealthComponent->GetOwner(),DamageValue,nullptr,Owner->Controller,Owner);
+		 	}
 		}
 	}
+
+	bCanAttack = false;
+	
+	if(GetWorld())
+	{
+		GetWorld()->GetTimerManager().ClearTimer(TimerHandle);
+		GetWorld()->GetTimerManager().SetTimer(TimerHandle, this, &UBaseAttackComponent::StartCoolDown, CoolDown, false);
+	}
+}
+
+void UBaseAttackComponent::StartCoolDown()
+{
+	bCanAttack = true;
 }

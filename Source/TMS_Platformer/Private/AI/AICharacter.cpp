@@ -17,7 +17,7 @@ AAICharacter::AAICharacter(const FObjectInitializer& ObjInit)
 	if (GetCharacterMovement())
 	{
 		GetCharacterMovement()->bUseControllerDesiredRotation = true;
-		GetCharacterMovement()->RotationRate = FRotator(0, 200, 0);
+		GetCharacterMovement()->RotationRate = FRotator(0, 300, 0);
 	}
 }
 

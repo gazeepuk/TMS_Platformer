@@ -25,5 +25,17 @@ protected:
 	float Radius = 50.0f;
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite)
-	float DamageValue = 10.0f;
+	float DamageValue = 1.0f;
+
+	UPROPERTY(EditAnywhere, BlueprintReadWrite)
+	float CoolDown = 3.0f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UAnimMontage* AttackAnimMontage;
+
+private:
+	bool bCanAttack = true;
+	FTimerHandle TimerHandle;
+
+	void StartCoolDown();
 };

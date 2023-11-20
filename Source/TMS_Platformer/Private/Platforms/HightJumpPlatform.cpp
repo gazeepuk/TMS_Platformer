@@ -16,7 +16,10 @@ AHightJumpPlatform::AHightJumpPlatform()
 void AHightJumpPlatform::BeginPlay()
 {
 	Super::BeginPlay();
-	StaticMesh->OnComponentHit.AddDynamic(this, &AHightJumpPlatform::OnHit);
+	if (StaticMesh && !StaticMesh->OnComponentHit.IsAlreadyBound(this, &AHightJumpPlatform::OnHit))
+	{
+		StaticMesh->OnComponentHit.AddDynamic(this, &AHightJumpPlatform::OnHit);
+	}
 }
 
 void AHightJumpPlatform::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor,
@@ -29,7 +32,7 @@ void AHightJumpPlatform::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherA
 	auto const CharacterMovement = Character->GetComponentByClass<UCharacterMovementComponent>();
 
 	if (!GetWorld() || !Character || !CharacterMovement) return;
-	FVector JumpVector = FVector::UpVector*JumpForce;
+	FVector JumpVector = FVector::UpVector * JumpForce;
 	CharacterMovement->Velocity.Z = 0;
 	CharacterMovement->AddImpulse(JumpVector);
 }

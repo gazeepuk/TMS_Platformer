@@ -2,9 +2,9 @@
 
 
 #include "Character/BaseCharacter.h"
-
 #include "Components/CapsuleComponent.h"
 #include "Components/HealthComponent.h"
+#include"Components/BaseAttackComponent.h"
 #include "Components/TextRenderComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/MovementComponent.h"
@@ -16,7 +16,8 @@ ABaseCharacter::ABaseCharacter(const FObjectInitializer& ObjInit)
 	PrimaryActorTick.bCanEverTick = false;
 
 	HealthComponent = CreateDefaultSubobject<UHealthComponent>("HealthComponent");
-
+	AttackComponent = CreateDefaultSubobject<UBaseAttackComponent>("AttackComponent");
+	
 	HealthTextComponent = CreateDefaultSubobject<UTextRenderComponent>("TextRenderComponent");
 	HealthTextComponent->SetupAttachment(GetRootComponent());
 	HealthTextComponent->SetOwnerNoSee(true);
@@ -52,7 +53,20 @@ void ABaseCharacter::OnDeath()
 	GetCapsuleComponent()->SetCollisionResponseToAllChannels(ECR_Ignore);
 }
 
+void ABaseCharacter::HandleMaxSpeed(float Health) const
+{
+	if(Health <= HealthToRun)
+	{
+		GetComponentByClass<UCharacterMovementComponent>()->MaxWalkSpeed = 400;
+	}
+	else
+	{
+		GetComponentByClass<UCharacterMovementComponent>()->MaxWalkSpeed = 100;
+	}
+}
+
 void ABaseCharacter::OnHealthChanged(float Health) const
 {
 	HealthTextComponent->SetText(FText::FromString(FString::Printf(TEXT("%.0f"), Health)));
+	HandleMaxSpeed(Health);
 }

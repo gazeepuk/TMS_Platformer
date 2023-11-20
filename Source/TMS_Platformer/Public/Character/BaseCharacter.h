@@ -8,6 +8,7 @@
 
 class UTextRenderComponent;
 class UHealthComponent;
+class UBaseAttackComponent;
 
 UCLASS()
 class TMS_PLATFORMER_API ABaseCharacter : public ACharacter
@@ -23,11 +24,18 @@ protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UHealthComponent* HealthComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
+	UBaseAttackComponent* AttackComponent;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadWrite, Category = "Components")
 	UTextRenderComponent* HealthTextComponent;
-	UAnimMontage* DeathAnimMontage;
 
+	UPROPERTY(EditDefaultsOnly, BlueprintReadWrite)
+	UAnimMontage* DeathAnimMontage;
+	float HealthToRun;
+
+	void HandleMaxSpeed(float Health) const;
 private:
 	void OnHealthChanged(float Health) const;
 };
