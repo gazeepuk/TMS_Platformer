@@ -18,11 +18,10 @@ void AHightJumpPlatform::BeginPlay()
 	Super::BeginPlay();
 	if (StaticMesh)
 	{
-		if(StaticMesh->OnComponentHit.IsAlreadyBound(this, &AHightJumpPlatform::OnHit))
+		if(!StaticMesh->OnComponentHit.IsAlreadyBound(this, &AHightJumpPlatform::OnHit))
 		{
-			StaticMesh->OnComponentHit.RemoveAll(this);	
+			StaticMesh->OnComponentHit.AddDynamic(this, &AHightJumpPlatform::OnHit);
 		}
-		StaticMesh->OnComponentHit.AddDynamic(this, &AHightJumpPlatform::OnHit);
 	}
 }
 
